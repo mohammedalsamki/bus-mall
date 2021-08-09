@@ -13,15 +13,15 @@ function FavProduct(name , extention = 'jpg'){
 
 this.name = name;
 this.src= `img/${name}.${extention}`;
-this.viewsNum =0;
-this.clicksNum =0;
+this.viewsNum = 0;
+this.clicksNum = 0;
 allOfProduct.push(this);
 
 }
 
 console.log(allOfProduct);
 
-new FavProduct('usb', 'gif');
+
 new FavProduct('water-can');
 new FavProduct('wine-glass');
 new FavProduct('dog-duck');
@@ -96,13 +96,13 @@ click.appendChild(list);
 
 }
 
-function ckickOage (event){
+function ckickOage(event){
 if (event.target === section){
 alert('please click on the the img');
-
-}clickedTime++;
+}
+clickedTime++;
 let clickonTheItem = event.target.title;
-for (let i = 0;i<allOfProduct;i++){
+for (let i = 0;i<allOfProduct.length;i++){
     if(clickonTheItem === allOfProduct[i].name){
         allOfProduct[i].clicksNum++;
     }
