@@ -8,26 +8,18 @@ let section = document.querySelector('section');
 let resultButton = document.getElementById('viewResults');
 let clickedTime = 0;
 let clickesAllow = 25;
-let retakeImg =[];
-let chance = 3;
 
 function FavProduct(name , extention = 'jpg'){
 
 this.name = name;
 this.src= `img/${name}.${extention}`;
-this.viewsNum = 0;
-this.clicksNum = 0;
+this.viewsNum =0;
+this.clicksNum =0;
 allOfProduct.push(this);
 
 }
 
 console.log(allOfProduct);
-let retakefoto = localStorage.getItem('products');
-console.log(retakefoto);
-if (retakefoto){
-    let showimgg =JSON.parse(retakefoto);
-    allOfProduct= showimgg;
-}else{
 
 
 new FavProduct('water-can');
@@ -49,7 +41,7 @@ new FavProduct('breakfast');
 new FavProduct('bubblegum');
 new FavProduct('chair');
 new FavProduct('cthulhu');
-}
+
 
 function ranProudect(){
 
@@ -67,7 +59,7 @@ function productsRun(){
     inputArray[1] = ranProudect();
     inputArray[2] = ranProudect();
 
-    while(inputArray[0] === inputArray [1] ){
+    while(inputArray[0] === inputArray [1]){
         inputArray[1]=ranProudect();
     }
     while(inputArray[1] === inputArray [2]){
@@ -99,17 +91,16 @@ for ( let i = 0; i<allOfProduct.length; i++){
 let list = document.createElement('li');
 list.textContent = `${allOfProduct[i].name} recive ${allOfProduct[i].clicksNum} clicks, and was seen ${allOfProduct[i].viewsNum} times`;
 click.appendChild(list);
-
+chartRender();
 }
 
 }
 
-function ckickOage(event){
+function ckickOage (event){
 if (event.target === section){
 alert('please click on the the img');
-return;
-}
-clickedTime++;
+
+}clickedTime++;
 let clickonTheItem = event.target.title;
 for (let i = 0;i<allOfProduct.length;i++){
     if(clickonTheItem === allOfProduct[i].name){
@@ -119,16 +110,15 @@ for (let i = 0;i<allOfProduct.length;i++){
 productsRun();
 if(clickedTime === clickesAllow){
     section.removeEventListener('click', ckickOage);
-    resultButton.addEventListener('click',voutRenderResults);
-    let chartdesplay =JSON.stringify(allOfProduct);
-    localStorage.setItem('products',chartdesplay);
-    chartRender();
-
 }
 
 }
+function clickBut(event){
 
-
+    if(clickedTime === clickesAllow){
+        voutRenderResults();
+    }
+}
 function chartRender(){
 let imgName = [];
 let imgView = [];
@@ -179,5 +169,3 @@ for ( let i = 0;i<allOfProduct.length;i++ ){
 productsRun();
 section.addEventListener('click',ckickOage);
 resultButton.addEventListener('click',voutRenderResults );
-
-
