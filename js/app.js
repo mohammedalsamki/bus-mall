@@ -8,26 +8,18 @@ let section = document.querySelector('section');
 let resultButton = document.getElementById('viewResults');
 let clickedTime = 0;
 let clickesAllow = 25;
-let retakeImg =[];
-let chance = 3;
 
 function FavProduct(name , extention = 'jpg'){
 
 this.name = name;
 this.src= `img/${name}.${extention}`;
-this.viewsNum = 0;
-this.clicksNum = 0;
+this.viewsNum =0;
+this.clicksNum =0;
 allOfProduct.push(this);
 
 }
 
 console.log(allOfProduct);
-let retakefoto = localStorage.getItem('products');
-console.log(retakefoto);
-if (retakefoto){
-    let showimgg =JSON.parse(retakefoto);
-    allOfProduct= showimgg;
-}else{
 
 
 new FavProduct('water-can');
@@ -49,7 +41,7 @@ new FavProduct('breakfast');
 new FavProduct('bubblegum');
 new FavProduct('chair');
 new FavProduct('cthulhu');
-}
+
 
 function ranProudect(){
 
@@ -63,30 +55,19 @@ console.log(ranProudect());
 function productsRun(){
 
     let inputArray = [];
-    // inputArray[0] = ranProudect();
-    // inputArray[1] = ranProudect();
-    // inputArray[2] = ranProudect();
+    inputArray[0] = ranProudect();
+    inputArray[1] = ranProudect();
+    inputArray[2] = ranProudect();
 
-    // while(inputArray[0] === inputArray [1] ){
-    //     inputArray[1]=ranProudect();
-    // }
-    // while(inputArray[1] === inputArray [2]){
-    //     inputArray[2]=ranProudect();
-    // }
-    // while(inputArray[2] === inputArray [0]){
-    //     inputArray[0]=ranProudect();
-    // }
-    while(inputArray.length <chance){
-        let indexretake = ranProudect();
-        if (!retakeImg.includes(indexretake)){
-            while(!inputArray.includes(indexretake)){
-                inputArray.push(indexretake);
-            }
-        }
+    while(inputArray[0] === inputArray [1]){
+        inputArray[1]=ranProudect();
     }
-    retakeImg[0] = inputArray[1];
-    retakeImg[1] = inputArray[1];
-    retakeImg[2] = inputArray[2];
+    while(inputArray[1] === inputArray [2]){
+        inputArray[2]=ranProudect();
+    }
+    while(inputArray[2] === inputArray [0]){
+        inputArray[0]=ranProudect();
+    }
 
 firstProduct.src = allOfProduct[inputArray[0]].src;
 firstProduct.title = allOfProduct[inputArray[0]].name;
@@ -115,12 +96,11 @@ chartRender();
 
 }
 
-function ckickOage(event){
+function ckickOage (event){
 if (event.target === section){
-alert('please click on image not in outher place ');
-return;
-}
-clickedTime++;
+alert('please click on the the img');
+
+}clickedTime++;
 let clickonTheItem = event.target.title;
 for (let i = 0;i<allOfProduct.length;i++){
     if(clickonTheItem === allOfProduct[i].name){
@@ -130,61 +110,14 @@ for (let i = 0;i<allOfProduct.length;i++){
 productsRun();
 if(clickedTime === clickesAllow){
     section.removeEventListener('click', ckickOage);
-    resultButton.addEventListener('click',voutRenderResults);
-    let chartdesplay =JSON.stringify(allOfProduct);
-    localStorage.setItem('products',chartdesplay);
-    chartRender();
-
 }
 
 }
+function clickBut(event){
 
-
-function chartRender(){
-let imgName = [];
-let imgView = [];
-let imgClick = [];
-
-for ( let i = 0;i<allOfProduct.length;i++ ){
-
-    imgName.push(allOfProduct[i].name);
-    imgView.push(allOfProduct[i].viewsNum);
-    imgClick.push(allOfProduct[i].clicksNum);
-
-}
- var chartObject = {
-    type: 'bar',
-    data: {
-      labels: imgName,
-      datasets: [{
-        label: 'Views',
-        data: imgView,
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 3
-      },
-      {
-        label: 'Clicks',
-        data: imgClick,
-        backgroundColor: 'rgba(153, 102, 255, 0.2)',
-        borderColor: 'rgba(153, 102, 255, 1)',
-        borderWidth: 3
-      }]
-    },
-    responsive: false,
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          }
-        }]
-      }
+    if(clickedTime === clickesAllow){
+        voutRenderResults();
     }
-  };
-
-  let ctx = document.getElementById('myChart').getContext('2d');
-  let myChart = new Chart(ctx, chartObject);
 }
 function chartRender(){
 let imgName = [];
