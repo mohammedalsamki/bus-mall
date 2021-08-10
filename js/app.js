@@ -110,7 +110,7 @@ for ( let i = 0; i<allOfProduct.length; i++){
 let list = document.createElement('li');
 list.textContent = `${allOfProduct[i].name} recive ${allOfProduct[i].clicksNum} clicks, and was seen ${allOfProduct[i].viewsNum} times`;
 click.appendChild(list);
-
+chartRender();
 }
 
 }
@@ -140,6 +140,52 @@ if(clickedTime === clickesAllow){
 }
 
 
+function chartRender(){
+let imgName = [];
+let imgView = [];
+let imgClick = [];
+
+for ( let i = 0;i<allOfProduct.length;i++ ){
+
+    imgName.push(allOfProduct[i].name);
+    imgView.push(allOfProduct[i].viewsNum);
+    imgClick.push(allOfProduct[i].clicksNum);
+
+}
+ var chartObject = {
+    type: 'bar',
+    data: {
+      labels: imgName,
+      datasets: [{
+        label: 'Views',
+        data: imgView,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 3
+      },
+      {
+        label: 'Clicks',
+        data: imgClick,
+        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+        borderColor: 'rgba(153, 102, 255, 1)',
+        borderWidth: 3
+      }]
+    },
+    responsive: false,
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  };
+
+  let ctx = document.getElementById('myChart').getContext('2d');
+  let myChart = new Chart(ctx, chartObject);
+}
 function chartRender(){
 let imgName = [];
 let imgView = [];
